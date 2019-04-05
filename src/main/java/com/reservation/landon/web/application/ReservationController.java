@@ -24,21 +24,9 @@ public class ReservationController {
     @Autowired
     private ReservationService reservationService;
 
-    @RequestMapping(method = RequestMethod.GET)
-    public String getReservations(@RequestParam(value="date", required = false) String dateString,
-                                  Model model){
-        Date date = null;
-        if(dateString != null){
-            try{
-                date = DATE_FORMAT.parse(dateString);
-            }catch(ParseException pe){
-                date = new Date();
-            }
-        }else{
-            date = new Date();
-        }
-
-        List<RoomReservation> roomReservationList = this.reservationService.getRoomReservationsForDate(date);
+    @RequestMapping(method= RequestMethod.GET)
+    public String getReservations(@RequestParam(value="date", required=false)String dateString, Model model){
+        List<RoomReservation> roomReservationList = this.reservationService.getRoomReservationsForDate(dateString);
         model.addAttribute("roomReservations", roomReservationList);
         return "reservations";
     }
